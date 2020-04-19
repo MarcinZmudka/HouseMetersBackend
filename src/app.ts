@@ -1,17 +1,12 @@
 import express from "express";
-import compression from "compression"; // compresses requests
-import session from "express-session";
 import bodyParser from "body-parser";
-import lusca from "lusca";
-import mongo from "connect-mongo";
-import flash from "express-flash";
 import mongoose from "mongoose";
 import bluebird from "bluebird";
-import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
+import { MONGODB_URI } from "./util/secrets";
 import get from "./controllers/get";
 import post from "./controllers/post";
+import getCSV from "./controllers/getCSV";
 import cors from "cors";
-const MongoStore = mongo(session);
 // Create Express server
 const app = express();
 
@@ -38,24 +33,10 @@ mongoose
 // Express configuration
 app.set("port", process.env.PORT || 3000);
 app.use(cors());
-app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-	session({
-		resave: true,
-		saveUninitialized: true,
-		secret: SESSION_SECRET,
-		store: new MongoStore({
-			url: mongoUrl,
-			autoReconnect: true,
-		}),
-	})
-);
-app.use(flash());
-app.use(lusca.xframe("SAMEORIGIN"));
-app.use(lusca.xssProtection(true));
 app.get("/get", get);
 app.post("/post", post);
+app.get("/getCSV", getCSV);
 
 export default app;

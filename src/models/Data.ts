@@ -1,19 +1,40 @@
 import mongoose from "mongoose";
 
 const flatSchema = new mongoose.Schema({
-	id: Number,
-	hotWater: Number,
-	coldWater: Number,
-	electricityOne: Number,
-	electricityTwo: Number,
-	heat: Number,
+	id: {
+		type: Number,
+		required: true,
+	},
+	hotWater: {
+		type: Number,
+		required: true,
+	},
+	coldWater: {
+		type: Number,
+		required: true,
+	},
+	electricityOne: {
+		type: Number,
+		required: true,
+	},
+	electricityTwo: {
+		type: Number,
+		required: true,
+	},
+	heat: {
+		type: Number,
+		required: true,
+	},
 });
 export const dataSchema = new mongoose.Schema({
 	createdAt: {
 		type: Date,
 		required: true,
 	},
-	flats: [flatSchema],
+	flats: {
+		type: [flatSchema],
+		required: true,
+	},
 });
 
 export const data = mongoose.model("data", dataSchema);
