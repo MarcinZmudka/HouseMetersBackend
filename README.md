@@ -1,4 +1,4 @@
-## System do aktulizacji stanu liczników w budynku wielomieszkaniowym
+## System do aktualizacji stanu liczników w budynku wielomieszkaniowym
 
 Tutaj znajduje się Backend aplikacji, aby zobaczyć Frontend kliknij [tutaj](https://github.com/MarcinZmudka/HouseMetersFront).
 

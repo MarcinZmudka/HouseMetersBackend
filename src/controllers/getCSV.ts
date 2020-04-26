@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { data, dataSchema } from "../models/Data";
-import { parse } from "json2csv";
+import { data } from "../models/Data";
+import json2csv from "nice-json2csv";
 interface flat {
 	id: number;
 	hotWater: number;
@@ -21,25 +21,36 @@ export default function getCSV(req: Request, res: Response) {
 		if (err) {
 			res.send({ error: err.message });
 		}
+		let values: any[] = [];
 		const dataFromMongo = post.toJSON();
 		const dataToCsv = dataFromMongo.flats.map((item: flat) => {
 			const id = getNameOfFlat(item.id);
-			return [
-				id,
-				item.electricityOne,
-				item.electricityTwo,
-				item.coldWater,
-				item.hotWater,
-				item.heat,
-			];
+			values.push({
+				opis: "nazwa",
+				value: id,
+			});
+			values.push({
+				opis: "Licznik elektryczny 1",
+				value: item.electricityOne,
+			});
+			values.push({
+				opis: "Licznik elektryczny 2",
+				value: item.electricityTwo,
+			});
+			values.push({
+				opis: "Licznik zimnej wody",
+				value: item.coldWater,
+			});
+			values.push({
+				opis: "Licznik ciepłej wody",
+				value: item.hotWater,
+			});
+			values.push({
+				opis: "Licznik gazu lub ciepłomierz",
+				value: item.heat,
+			});
 		});
-		const flattedData = flat(dataToCsv);
-		const jsonObject = flattedData.map((item) => {
-			return {
-				data: item,
-			};
-		});
-		const csv = parse(jsonObject);
+		const csv = json2csv.convert(values);
 		res.attachment("plik.csv");
 		res.status(200).send(csv);
 	});
