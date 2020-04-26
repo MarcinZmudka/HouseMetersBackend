@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { data } from "../models/Data";
-import json2csv from "nice-json2csv";
+import { parse } from "json2csv";
 interface flat {
 	id: number;
 	hotWater: number;
@@ -50,7 +50,7 @@ export default function getCSV(req: Request, res: Response) {
 				value: item.heat,
 			});
 		});
-		const csv = json2csv.convert(values);
+		const csv = parse(values);
 		res.attachment("plik.csv");
 		res.status(200).send(csv);
 	});
