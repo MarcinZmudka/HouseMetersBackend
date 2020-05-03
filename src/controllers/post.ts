@@ -8,9 +8,10 @@ export default function post(req: Request, res: Response) {
 	data1
 		.save()
 		.then((item) => res.json({ message: "OK" }))
-		.catch((err: Error) =>
+		.catch((err: Error) => {
 			res.send({
 				error: err.message,
-			})
-		);
+			});
+			console.log(err);
+		});
 }
