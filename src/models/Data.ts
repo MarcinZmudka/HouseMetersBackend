@@ -13,19 +13,23 @@ const flatSchema = new mongoose.Schema({
 		type: Number,
 		required: true,
 	},
-	electricityOne: {
+	electricity: {
 		type: Number,
 		required: true,
 	},
-	electricityTwo: {
+	togetherOneOne: {
 		type: Number,
 		required: false,
 	},
-	togetherOne: {
+	togetherOneTwo: {
 		type: Number,
 		required: false,
 	},
-	togetherTwo: {
+	togetherTwoOne: {
+		type: Number,
+		required: false,
+	},
+	togetherTwoTwo: {
 		type: Number,
 		required: false,
 	},
