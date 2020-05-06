@@ -5,13 +5,14 @@ interface Flat {
 	id: number;
 	hotWater: number;
 	coldWater: number;
-	electricityOne: number;
+	electricity: number;
 	heat: number;
 }
 export interface House extends Flat {
-	electricityTwo: number;
-	togetherOne: number;
-	togetherTwo: number;
+	togetherOneOne: number;
+	togetherOneTwo: number;
+	togetherTwoOne: number;
+	togetherTwoTwo: number;
 }
 interface MongoData {
 	createdAt: Date;
@@ -52,7 +53,7 @@ export default function getCSV(req: Request, res: Response) {
 			});
 			values.push({
 				opis: "Licznik elektryczny 1",
-				value: item.electricityOne,
+				value: item.electricity,
 			});
 			values.push({
 				opis: "Licznik zimnej wody",
@@ -66,18 +67,22 @@ export default function getCSV(req: Request, res: Response) {
 				opis: "Licznik gazu lub ciepłomierz",
 				value: item.heat,
 			});
-			if ((item as House).electricityTwo) {
+			if ((item as House).togetherOneOne) {
 				values.push({
-					opis: "Licznik elektryczny 2",
-					value: (item as House).electricityTwo,
+					opis: "Licznik elektryczny - Części  wspólne 456-1",
+					value: (item as House).togetherOneOne,
 				});
 				values.push({
-					opis: "Licznik elektryczny - Części  wspólne 1",
-					value: (item as House).togetherOne,
+					opis: "Licznik elektryczny - Części  wspólne 456-2",
+					value: (item as House).togetherOneTwo,
 				});
 				values.push({
-					opis: "Licznik elektryczny - Części  wspólne 2",
-					value: (item as House).togetherTwo,
+					opis: "Licznik elektryczny - Części  wspólne 222-1",
+					value: (item as House).togetherTwoOne,
+				});
+				values.push({
+					opis: "Licznik elektryczny - Części  wspólne 222-2",
+					value: (item as House).togetherTwoTwo,
 				});
 			}
 		});
